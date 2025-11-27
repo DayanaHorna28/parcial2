@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_libros
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: prestamo_libros
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - booksnet
+
+  api:
+    build: ./api
+    container_name: api_libros
+    environment:
+      DB_HOST: postgres
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: prestamo_libros
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - booksnet
+
+  frontend:
+    build: ./frontend
+    container_name: frontend_libros
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    networks:
+      - booksnet
+
+networks:
+  booksnet:
+    driver: bridge
