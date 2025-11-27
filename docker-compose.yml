@@ -33,7 +33,7 @@ services:
     build: ./frontend
     container_name: frontend_libros
     ports:
-      - "8080:80"
+      - "8880:80"
     depends_on:
       - api
     networks:

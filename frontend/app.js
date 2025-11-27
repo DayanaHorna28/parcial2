@@ -7,3 +7,9 @@ async function listarLibros() {
     document.getElementById("libros").innerHTML =
         data.map(l => `<p>${l.titulo} - ${l.autor}</p>`).join("");
 }
+
+function mostrarSeccion(id) {
+    document.querySelectorAll(".seccion").forEach(sec => sec.classList.add("oculto"));
+    document.getElementById(id).classList.remove("oculto");
+}
+

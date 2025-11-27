@@ -1,15 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
-    <title>Préstamo de Libros</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <title>Biblioteca Digital</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <h1>Sistema de Préstamos</h1>
-    <button onclick="listarLibros()">Ver Libros</button>
-    <div id="libros"></div>
+    <header>
+        <h1>📚 Biblioteca Digital</h1>
+        <nav>
+            <button onclick="mostrarSeccion('agregar-libro')">Agregar Libro</button>
+            <button onclick="mostrarSeccion('listar-libros')">Ver Libros</button>
+            <button onclick="mostrarSeccion('prestamos')">Préstamos</button>
+        </nav>
+    </header>
+
+
+    <!-- SECCIÓN: Agregar Libro -->
+    <section id="agregar-libro" class="seccion oculto">
+        <h2>Agregar Nuevo Libro</h2>
+        <form id="formAgregar">
+            <label>Título:</label>
+            <input type="text" id="titulo" required>
+
+            <label>Autor:</label>
+            <input type="text" id="autor" required>
+
+            <label>Stock:</label>
+            <input type="number" id="stock" min="1" required>
+
+            <button type="submit">Guardar Libro</button>
+        </form>
+    </section>
+
+
+    <!-- SECCIÓN: Lista de Libros -->
+    <section id="listar-libros" class="seccion oculto">
+        <h2>Lista de Libros</h2>
+        <div id="contenedorLibros" class="lista"></div>
+    </section>
+
+
+    <!-- SECCIÓN: Préstamos -->
+    <section id="prestamos" class="seccion oculto">
+        <h2>Realizar Préstamo</h2>
+
+        <form id="formPrestamo">
+            <label>ID del Libro:</label>
+            <input type="number" id="idLibro" required>
+
+            <label>Cantidad a Prestar:</label>
+            <input type="number" id="cantidadPrestamo" min="1" required>
+
+            <button type="submit">Realizar Préstamo</button>
+        </form>
+
+        <h3>Préstamos Registrados</h3>
+        <div id="contenedorPrestamos" class="lista"></div>
+    </section>
 
     <script src="app.js"></script>
 </body>
