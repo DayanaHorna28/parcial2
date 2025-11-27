@@ -1,14 +1,13 @@
 terraform {
   required_providers {
-    aws = {
-      source = "hashicorp/aws"
-      version = "~> 5.0"
+    clouding = {
+      source  = "clouding/clouding"
+      version = "0.2.2"
     }
   }
-
-  required_version = ">= 1.3"
+  required_version = ">= 1.3.0"
 }
 
-provider "aws" {
-  region = var.region
+provider "clouding" {
+  api_token = var.api_token
 }

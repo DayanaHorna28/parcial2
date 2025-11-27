@@ -1,34 +1,16 @@
-resource "aws_eks_cluster" "eks" {
-  name     = var.cluster_name
-  role_arn = aws_iam_role.eks_role.arn
+resource "clouding_ssh_key" "main" {
+  name       = "main-key"
+  public_key = var.ssh_key
+}
 
-  vpc_config {
-    subnet_ids = aws_subnet.eks_subnets[*].id
+resource "clouding_server" "k8s_master" {
+  name     = var.server_name
+  plan     = var.server_plan
+  image    = "ubuntu-22.04"
+  ssh_keys = [clouding_ssh_key.main.id]
+
+  network {
+    ipv4 = "dhcp"
+    ipv6 = true
   }
-}
-
-resource "aws_iam_role" "eks_role" {
-  name = "eksClusterRole"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [{
-      Effect = "Allow",
-      Principal = {
-        Service = "eks.amazonaws.com"
-      },
-      Action = "sts:AssumeRole"
-    }]
-  })
-}
-
-resource "aws_subnet" "eks_subnets" {
-  count = 2
-  vpc_id = aws_vpc.main.id
-  cidr_block = cidrsubnet("10.0.0.0/16", 8, count.index)
-  availability_zone = element(["us-east-1a", "us-east-1b"], count.index)
-}
-
-resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
 }

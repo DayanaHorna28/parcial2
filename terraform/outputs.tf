@@ -1,7 +1,7 @@
-output "cluster_endpoint" {
-  value = aws_eks_cluster.eks.endpoint
+output "public_ip" {
+  value = clouding_server.k8s_master.ipv4_address
 }
 
-output "cluster_name" {
-  value = aws_eks_cluster.eks.name
+output "ssh_access" {
+  value = "ssh root@${clouding_server.k8s_master.ipv4_address}"
 }
